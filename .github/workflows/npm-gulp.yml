@@ -1,4 +1,4 @@
-name: NodeJS with Gulp
+name: Angular Build
 
 on:
   push:
@@ -12,17 +12,26 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [10.x, 12.x, 14.x]
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-
-    - name: Build
+    
+    - name: Delete package-lock.json
       run: |
-        npm install --legacy-peer-deps
-        gulp
+        rm -f package-lock.json     
+
+    - name: Install Dependencies
+      run: npm install
+
+   # - name: Build
+   #   run: ng build --configuration=production
+
+               
+
